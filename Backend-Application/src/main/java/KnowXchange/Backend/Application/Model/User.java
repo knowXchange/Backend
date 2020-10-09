@@ -3,16 +3,23 @@
 
 package KnowXchange.Backend.Application.Model;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "User")
+@Table(name = "user")
 public class User {
   @Id
+  @Column(name = "id_of_user")
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Integer id;
 
@@ -20,6 +27,32 @@ public class User {
 
   private String email;
 
+  private String password;
+  
+  private Long tokens;
+  
+  private String description;
+  
+  @JsonIgnore
+  @OneToMany( mappedBy = "userListener" )
+  private List<Tutorship> tutorshipsReceived;
+  
+  @JsonIgnore
+  @OneToMany( mappedBy = "userTeller" )
+  private List<Tutorship> tutorshipsSolved;
+  
+  @JsonIgnore
+  @OneToMany( mappedBy = "userOwner" )
+  private List<Course> courses;
+  
+  @JsonIgnore
+  @OneToMany( mappedBy = "userAssistant" )
+  private List<Takes> reserves;
+  
+  public User() {
+	  
+  }
+  
   public Integer getId() {
     return id;
   }
@@ -42,5 +75,37 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  
+  public String getPassword() {
+	    return password;
+  }
+  
+  public void setPassword(String password) {
+	    this.password = password;
+  }
+
+  public Long getTokens() {
+	  return tokens;
+  }
+  
+  public void setTokens(Long tokens) {
+	  this.tokens = tokens;
+  }
+  
+  public String getDescription() {
+	  return this.description;
+  }
+  
+  public void setDescription(String description) {
+	  this.description = description;
+  }
+  
+  public List<Tutorship> getTutorshipsReceived(){
+	  return this.tutorshipsReceived;
+  }
+
+  public void setTutorshipsReceived(List<Tutorship> tutorshipsReceived){
+	  this.tutorshipsReceived = tutorshipsReceived;
   }
 }
