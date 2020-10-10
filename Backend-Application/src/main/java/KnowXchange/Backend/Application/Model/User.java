@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "user")
+@Table(name = "Appuser")
 public class User {
   @Id
   @Column(name = "id_of_user")
