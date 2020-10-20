@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 @CrossOrigin("*")
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
   @Autowired 
   private UserRepository userRepository;
+  
+  private PasswordEncoder passwordEncoder;
 
   @PostMapping(path="/add")
   public @ResponseBody String addNewUser (@RequestParam String name
@@ -36,7 +39,7 @@ public class UserController {
     User n = new User();
     n.setName(name);
     n.setEmail(email);
-    n.setPassword(password);
+    n.setPassword(passwordEncoder.encode(password));
     n.setTokens(tokens);
     n.setDescription(description);
     userRepository.save(n);
