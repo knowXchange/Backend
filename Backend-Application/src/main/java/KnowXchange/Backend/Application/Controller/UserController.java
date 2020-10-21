@@ -80,4 +80,16 @@ public class UserController {
 	  userRepository.delete(userReceived);
 	  return "Deleted";
   }
+  
+  @GetMapping(path="/get-login")
+  public @ResponseBody int getLoginValidation( @RequestParam String name, @RequestParam String password) {
+    // This returns a JSON or XML with the users
+	  Iterable<User> temp = userRepository.findAll();
+	  for(User u: temp) {
+		  if(u.getName().equals(name) && passwordEncoder.matches(password,u.getPassword()))
+				  return u.getId();
+	  }
+	  return 0;
+	  
+  }
 }
