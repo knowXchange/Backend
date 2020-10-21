@@ -190,7 +190,7 @@ public class FieldBranchController {
 \_|   |_|_|\__|_|  \___/  \_| \_\__,_|_| |_| |_|\__,_|
 
 	 */
-	
+/*	
 	@GetMapping(path="/FilterBranchesByKnowledgeField")
 	public @ResponseBody ArrayList<String> FilterBranchesByKnowledgeField(@RequestParam String FieldName){
 		
@@ -226,7 +226,38 @@ public class FieldBranchController {
 	//___________________________________________________________________________________________________
 	
 	//------------------------------------------------------------------------------------------------------------------
-	
+	*/
+	@GetMapping(path="/FilterBranchesByKnowledgeField")
+	public @ResponseBody ArrayList<FieldBranch> FilterBranchesByKnowledgeField(@RequestParam String FieldName){
+		
+		
+		ArrayList<FieldBranch> filtro = new ArrayList();
+		
+		//Se itera por las Areas
+		
+		int solucion = -1;
+		//Se recolecta el id de la area de interes
+		for (KnowledgeField t : KnowledgeFieldRepository.findAll()) {
+			
+			
+			
+			if(t.getTitle().equalsIgnoreCase(FieldName)) {
+				solucion = t.getId();
+				//System.out.println("______________-\n" + t.getBranches().size() + t.getBranches().get(0).getTitle());
+				
+				
+				int l = t.getBranches().size();	
+				for(int i = 0;i<l;i++) {
+					filtro.add(t.getBranches().get(i));
+				}
+				
+			}
+			
+		}
+		
+		
+		return filtro;
+	}
 	
 	
 	@PutMapping(path="modifyFieldBranchById/{id}")

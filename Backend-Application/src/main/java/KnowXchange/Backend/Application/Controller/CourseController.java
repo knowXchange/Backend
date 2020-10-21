@@ -27,6 +27,7 @@ import KnowXchange.Backend.Application.Repository.LessonRepository;
 import KnowXchange.Backend.Application.Repository.TackleRepository;
 import KnowXchange.Backend.Application.Repository.TakesRepository;
 import KnowXchange.Backend.Application.Repository.ThemeRepository;
+import KnowXchange.Backend.Application.Repository.UserRepository;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,44 @@ public class CourseController {
 	@Autowired
     private FieldBranchRepository FieldBranchRepository;
 	
+	//Agregue el userRepository
+	@Autowired
+	private UserRepository userRepository;
+
+	//Modifique este metodo, le agregue unos parametros y objetos
+	@PostMapping(path="/addNewKXCourse")
+		  public @ResponseBody String addNewKXCourse(
+				  @RequestParam String title, 
+				  @RequestParam String description,
+				  @RequestParam Long tokensCost,
+				  @RequestParam Integer branch_id,
+				  @RequestParam Integer ownerId
+		      ) {
+		   
+			
+		    Course course = new Course();
+		    course.setDescription(description);
+		    course.setTitle(title);
+		    course.setTokensCost(tokensCost);	  
+		    course.setBranch(FieldBranchRepository.findById(branch_id).get());
+		    course.setUserOwner(userRepository.findById(ownerId).get()); 
+		    
+		    courseRepository.save(course);
+		    return "Saved";
+		}
+
+
+	//Agregue este metodo
+	@GetMapping(path="/getByOwner/{id}")
+		  public @ResponseBody ArrayList<Course> getCourseByOwner(@PathVariable(value = "id")Integer id) {
+			ArrayList<Course> courses = new ArrayList<>();
+			for(Course c : courseRepository.findAll()) {
+				if(c.getUserOwner().getId().equals(id))
+					  courses.add(c);
+			}
+			return courses;
+		}
+	
 	@PostMapping(path="/add")
 	  public @ResponseBody String addNewCourse (@RequestParam String title
 	      , @RequestParam String description
@@ -67,41 +106,7 @@ public class CourseController {
 	    courseRepository.save(course);
 	    return "Saved";
 	}
-	
-	//________________________________________________________________
-	
-	/*
- _____                       _____                      
-/  __ \                     /  __ \                     
-| /  \/_ __ ___  __ _ _ __  | /  \/_   _ _ __ ___  ___  
-| |   | '__/ _ \/ _` | '__| | |   | | | | '__/ __|/ _ \ 
-| \__/\ | |  __/ (_| | |    | \__/\ |_| | |  \__ \ (_) |
- \____/_|  \___|\__,_|_|     \____/\__,_|_|  |___/\___/ 
-	 */
-	
-	
-	@PostMapping(path="/addNewKXCourse")
-	  public @ResponseBody String addNewKXCourse 
-	     (@RequestParam String title
-	    , @RequestParam String description
-	       ,@RequestParam Long tokensCost, 
-	      @RequestParam String branch_title) {
-	   
 		
-	    Course course = new Course();
-	    course.setDescription(description);
-	    course.setTitle(title);
-	    course.setTokensCost(tokensCost);
-	  
-	    course.setBranch(getBranchbyTitle(branch_title));
-	    
-	    
-	    
-	    courseRepository.save(course);
-	    return "Saved";
-	}
-	
-	
 	@GetMapping(path="/pruebaInsercionCurso")
 	 public @ResponseBody ArrayList<Course> pruebaInsercionCurso (){
   
