@@ -7,6 +7,7 @@ package KnowXchange.Backend.Application.Controller;
 import KnowXchange.Backend.Application.Model.User;
 import KnowXchange.Backend.Application.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
@@ -27,8 +29,13 @@ public class UserController {
   @Autowired 
   private UserRepository userRepository;
   
-  private PasswordEncoder passwordEncoder;
+  private PasswordEncoder passwordEncoder = encoder();
 
+  @Bean
+  public PasswordEncoder encoder() {
+	  return new BCryptPasswordEncoder();
+  }
+  
   @PostMapping(path="/add")
   public @ResponseBody String addNewUser (@RequestParam String name
       , @RequestParam String email
