@@ -28,6 +28,14 @@ public class Course {
 	
 	private Long tokensCost;
 
+	//---------------------------------------------------------------------------------
+	//Un curso se enmarca en un area del conocimiento
+	@ManyToOne
+	@JoinColumn(name = "Branch_id")
+    private FieldBranch fieldbranchPointer;
+	//---------------------------------------------------------------------------------
+	
+	
 	@JsonIgnore
 	@OneToMany( mappedBy = "course" )
 	private List<Lesson> lessons;
@@ -107,4 +115,12 @@ public class Course {
 	public void setListTackles(List<Tackle> tackles) {
 		this.tackles = tackles;
 	}
+	
+	
+	
+	public void setBranch (FieldBranch fieldbranchPointer) {
+		this.fieldbranchPointer = fieldbranchPointer;
+	}
+	
+	
 }

@@ -14,15 +14,21 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 @Entity
 @Table(name = "theme")
 public class Theme {
+	
 	@Id
 	@Column(name = "theme_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
 	private String title;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
@@ -35,6 +41,14 @@ public class Theme {
 	@JsonIgnore
 	@OneToMany( mappedBy = "theme" )
 	private List<Tutorship> tutorships;
+	
+
+	//******
+	//un tema esta dentro de una rama
+		@ManyToOne
+		@JoinColumn(name = "FieldBranch_id")
+	    private FieldBranch fieldbranch;
+		//*****
 	
 	public Theme() {
 		
@@ -74,5 +88,14 @@ public class Theme {
 	
 	public void setTutorships(List<Tutorship> tutorships){
 		this.tutorships = tutorships;
+	}
+	
+	
+	public Integer getBranchFK() {
+		return this.fieldbranch.getId();
+	}
+	
+	public void setBranch( FieldBranch fieldbranch) {
+		this.fieldbranch = fieldbranch;
 	}
 }
