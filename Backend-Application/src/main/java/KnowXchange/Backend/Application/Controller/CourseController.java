@@ -59,6 +59,149 @@ public class CourseController {
 	//Agregue el userRepository
 	@Autowired
 	private UserRepository userRepository;
+	
+	
+	
+	
+	//===================================================================================================================
+	
+	/*
+	___  ___     _            _             _____            _       _        _____ 
+	|  \/  |    | |    /     | |           /  ___|          (_)     | |      |____ |
+	| .  . | ___| |_ ___   __| | ___  ___  \ `--. _ __  _ __ _ _ __ | |_       _ / /
+	| |\/| |/ _ \ __/ _ \ / _` |/ _ \/ __|  `--. \ '_ \| '__| | '_ \| __|     |    \
+	| |  | |  __/ || (_) | (_| | (_) \__ \ /\__/ / |_) | |  | | | | | |_     ._‾_/ /
+	\_|  |_/\___|\__\___/ \__,_|\___/|___/ \____/| .__/|_|  |_|_| |_|\__|    \____/ 
+	                                             | |       
+	                                              ‾                         
+		 */
+	
+	
+	//_______________________________________________________________________________________________________
+	/*
+	Metodo para obtener un curso por su identificador
+	
+	   -recibe identificador
+	   -devuelve el objeto del curso buscado
+	 */
+	
+	@GetMapping(path="/getByIdKX")
+	  public @ResponseBody Course getCourseByIdKX(@RequestParam Integer id) {
+		  return courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
+	}
+	//_______________________________________________________________________________________________________
+	
+	
+	
+	
+	
+	
+	//_______________________________________________________________________________________________________
+	
+	/*
+	-->Este metodo edita un curso SIN AFECTAR LAS RELACIONES CURSO-RAMA
+	 
+	Metodo para editar los datos basicos de un curso (nombre, descripcion y costo en tokens)
+	
+	   recibe:
+	      -identificador del curso a editar
+	      -nuevo titulo
+	      -nueva descripcion
+	      -nuevo costo en tokens
+	      
+	     devuelve mensaje "Modified" si la operacion tiene exito"
+	     
+	 */
+	
+	
+	@PostMapping(path = "/editCoursePlainData")
+	  public @ResponseBody String editCoursePlainData(
+			  @RequestParam Integer id,
+			  @RequestParam String title, 
+			  @RequestParam String description,
+			  @RequestParam Long tokensCost) {
+		
+		  Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
+		  
+		  course.setDescription(description);
+		  course.setTitle(title);
+		  course.setTokensCost(tokensCost);	  
+		  courseRepository.save(course);
+		  return "Modified";
+	}
+	//_______________________________________________________________________________________________________-
+	
+	
+	
+	
+	
+	
+	
+	
+	//_______________________________________________________________________________________________________
+	
+	/*
+	-->Este metodo edita un curso y SI MODIFICA LA RELACION CURSO-RAMA
+	 
+	Metodo para editar los datos basicos de un curso (nombre, descripcion y costo en tokens)
+	
+	   recibe:
+	      -identificador del curso a editar
+	      -nuevo titulo
+	      -nueva descripcion
+	      -nuevo costo en tokens
+	      -identificador de la rama a la cual se debe cambiar la asociacion
+	      
+	   
+	   devuelve mensaje "Modified" si la operacion tiene exito"
+	      
+	 */
+	
+	@PostMapping(path = "/editCourseAllData")
+	  public @ResponseBody String editCourseAllData(
+			  @RequestParam Integer id,
+			  @RequestParam String title, 
+			  @RequestParam String description,
+			  @RequestParam Long tokensCost,
+			  @RequestParam Integer branch_id) {
+		
+		  Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
+		  
+		  course.setDescription(description);
+		  course.setTitle(title);
+		  course.setTokensCost(tokensCost);	  
+		  course.setBranch(FieldBranchRepository.findById(branch_id).get());
+		  courseRepository.save(course);
+		  
+		  return "Modified";
+	}
+	//_______________________________________________________________________________________________________
+	
+	
+	//==================================================================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	//Modifique este metodo, le agregue unos parametros y objetos
 	@PostMapping(path="/addNewKXCourse")
@@ -94,6 +237,8 @@ public class CourseController {
 			return courses;
 		}
 	
+	//_____________________________________________________________________________________-
+	
 	@PostMapping(path="/add")
 	  public @ResponseBody String addNewCourse (@RequestParam String title
 	      , @RequestParam String description
@@ -106,6 +251,8 @@ public class CourseController {
 	    courseRepository.save(course);
 	    return "Saved";
 	}
+	
+	//_____________________________________________________________________________________________
 		
 	@GetMapping(path="/pruebaInsercionCurso")
 	 public @ResponseBody ArrayList<Course> pruebaInsercionCurso (){

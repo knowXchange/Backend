@@ -26,9 +26,13 @@ public class Lesson {
 	
 	private String description;
 	
+	
+	//----------------------------------------------------------------------------
+	//una clase pertenece a un inico curso, el curso puede tener muchas clases
 	@ManyToOne
 	@JoinColumn(name = "course_id")
 	private Course course;
+	//----------------------------------------------------------------------------
 	
 	@JsonIgnore
 	@OneToMany( mappedBy = "lesson")
