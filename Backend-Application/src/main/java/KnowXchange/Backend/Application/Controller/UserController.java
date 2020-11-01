@@ -36,6 +36,41 @@ public class UserController {
 	  return new BCryptPasswordEncoder();
   }
   
+  
+  
+  
+  
+  
+  
+  //____________________________________________________________________________________
+  //METODOS CREAR PERFIL BY SANTIAGO
+  
+  @PutMapping(path = "/modifyUser/{id}")
+  public @ResponseBody String modifyUser(@PathVariable(value = "id")Integer id,@RequestParam String email, @RequestParam String description) {
+	  User userReceived = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+	  userReceived.setEmail(email);
+	  userReceived.setDescription(description);
+	  userRepository.save(userReceived);
+	  return "Modified";
+  }
+  @PutMapping(path = "/modifyPassword/{id}")
+  public @ResponseBody String modifyPassword(@PathVariable(value = "id")Integer id,@RequestParam String password) {
+	  User userReceived = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+	  userReceived.setPassword(passwordEncoder.encode(password));
+	  userRepository.save(userReceived);
+	  return "Modified";
+  }
+  
+  
+  //____________________________________________________________________________________
+  
+  
+  
+  
+  
+  
+  
+  
   @PostMapping(path="/add")
   public @ResponseBody String addNewUser (@RequestParam String name
       , @RequestParam String email
@@ -64,6 +99,8 @@ public class UserController {
 	  return userRepository.findById(id).orElseThrow(() -> new RuntimeException());
   }
   
+  /*
+   //ACTUALIZADO ARRIBA
   @PutMapping(path = "/modifyUser/{id}")
   public @ResponseBody String modifyUser(@PathVariable(value = "id")Integer id,@RequestBody User user) {
 	  User userReceived = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
@@ -72,7 +109,7 @@ public class UserController {
 	  userReceived.setEmail(user.getEmail());
 	  userReceived.setDescription(user.getDescription());
 	  return "Modified";
-  }
+  }*/
   
   @DeleteMapping("DeleteUser/{id}")
   public @ResponseBody String deleteUser(@PathVariable(value = "id")Integer id) {
