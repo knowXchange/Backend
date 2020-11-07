@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package KnowXchange.Backend.Application.Controller;
+import KnowXchange.Backend.Application.Model.Course;
+import KnowXchange.Backend.Application.Model.Takes;
 import KnowXchange.Backend.Application.Model.User;
+import KnowXchange.Backend.Application.Repository.CourseRepository;
+import KnowXchange.Backend.Application.Repository.TakesRepository;
 import KnowXchange.Backend.Application.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +32,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserController {
   @Autowired 
   private UserRepository userRepository;
+  
+  @Autowired
+  private CourseRepository courseRepository;
+  
+  @Autowired
+  private TakesRepository takesRepository;
   
   private PasswordEncoder passwordEncoder = encoder();
 
@@ -128,5 +138,16 @@ public class UserController {
 	  }
 	  return 0;
 	  
+  }
+  
+  @PutMapping(path = "/register-into-course/{userId}/{courseId}")
+  public @ResponseBody String registerIntoCourse(@PathVariable(value = "userId")Integer userId,@PathVariable(value = "courseId")Integer courseId) {
+	  User userObtained = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
+	  Course courseObtained = this.courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException());
+	  Takes take = new Takes();
+	  take.setCourseTaken(courseObtained);
+	  take.setUserAssistant(userObtained);
+	  this.takesRepository.save(take);
+	  return "Registered";
   }
 }
