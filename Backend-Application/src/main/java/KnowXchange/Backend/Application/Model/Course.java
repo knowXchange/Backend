@@ -127,5 +127,7 @@ public class Course {
 		this.fieldbranchPointer = fieldbranchPointer;
 	}
 	
-	
+	public Integer getFieldId() {
+		return this.fieldbranchPointer.getFieldFK();
+	}
 }

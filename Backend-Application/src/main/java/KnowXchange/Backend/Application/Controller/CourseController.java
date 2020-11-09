@@ -54,7 +54,7 @@ public class CourseController {
     private ThemeRepository themeRepository;
 	
 	@Autowired
-    private FieldBranchRepository FieldBranchRepository;
+    private FieldBranchRepository fieldBranchRepository;
 	
 	//Agregue el userRepository
 	@Autowired
@@ -170,7 +170,7 @@ public class CourseController {
 		  course.setDescription(description);
 		  course.setTitle(title);
 		  course.setTokensCost(tokensCost);	  
-		  course.setBranch(FieldBranchRepository.findById(branch_id).get());
+		  course.setBranch(fieldBranchRepository.findById(branch_id).get());
 		  courseRepository.save(course);
 		  
 		  return "Modified";
@@ -218,7 +218,7 @@ public class CourseController {
 		    course.setDescription(description);
 		    course.setTitle(title);
 		    course.setTokensCost(tokensCost);	  
-		    course.setBranch(FieldBranchRepository.findById(branch_id).get());
+		    course.setBranch(fieldBranchRepository.findById(branch_id).get());
 		    course.setUserOwner(userRepository.findById(ownerId).get()); 
 		    
 		    courseRepository.save(course);
@@ -300,10 +300,33 @@ public class CourseController {
 		  return "Deleted";
 	}
 	
+	/*
+	 * org.apache.commons.lang3.StringUtils.containsIgnoreCase(CharSequence str,
+                                     CharSequence searchStr);
+	 * */
 	
+	@GetMapping(path="/getByWord/{word}")
+	  public @ResponseBody ArrayList<Course> getCourseByWord(@PathVariable(value = "word")String word) {
+		ArrayList<Course> courses = new ArrayList<>();
+		for(Course c : courseRepository.findAll()) {
+			if(c.getTitle().toUpperCase().contains(word.toUpperCase())) {
+				courses.add(c);				
+			}
+			
+		}
+		return courses;
+	}
 	
-	
-	
+	@GetMapping(path="/getByBranch/{branchId}")
+	  public @ResponseBody ArrayList<Course> getCourseByFieldId(@PathVariable(value = "branchId")Integer fieldId) {
+		ArrayList<Course> courses = new ArrayList<>();
+		for(Course c : courseRepository.findAll()) {
+			if(c.getFieldId() == fieldId) {
+				courses.add(c);				
+			}
+		}
+		return courses;
+	}
 	
 	
 	//_______________________________________________________________________________________________-
@@ -341,7 +364,7 @@ public class CourseController {
 		//Funcion que regresa la rama con un titulo dado
 		public FieldBranch getBranchbyTitle(String title){
 			FieldBranch answer = null;
-			for (FieldBranch t : FieldBranchRepository.findAll()) {
+			for (FieldBranch t : fieldBranchRepository.findAll()) {
 				if(t.getTitle().equalsIgnoreCase(title)) {
 					answer = t;
 				}
