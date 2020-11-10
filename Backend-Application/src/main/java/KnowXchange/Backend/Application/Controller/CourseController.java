@@ -328,7 +328,7 @@ public class CourseController {
 		return courses;
 	}
 	
-	@GetMapping(path="/getAll")
+	@GetMapping(path="/getAllCourses")
 	  public @ResponseBody ArrayList<Course> getAllCourses() {
 		ArrayList<Course> courses = new ArrayList<>();
 		for(Course c : courseRepository.findAll()) {
