@@ -328,6 +328,14 @@ public class CourseController {
 		return courses;
 	}
 	
+	@GetMapping(path="/getAll")
+	  public @ResponseBody ArrayList<Course> getAllCourses() {
+		ArrayList<Course> courses = new ArrayList<>();
+		for(Course c : courseRepository.findAll()) {
+			courses.add(c);
+		}
+		return courses;
+	}
 	
 	//_______________________________________________________________________________________________-
 	//Funcion que regresa el el tema con un titulo dado
