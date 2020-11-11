@@ -340,6 +340,18 @@ public class CourseController {
 		return courses;
 	}
 	
+	@GetMapping(path="/getCourseById/{id}")
+	  public @ResponseBody ArrayList<Course> getCourseByIdWithArray(@PathVariable(value = "id")Integer id) {
+		ArrayList<Course> courses = new ArrayList<>();
+		for(Course c : courseRepository.findAll()) {
+			if(c.getId() == id) {
+				courses.add(c);
+				break;
+			}
+		}
+		return courses;
+	}
+	
 	//_______________________________________________________________________________________________-
 	//Funcion que regresa el el tema con un titulo dado
 		public Theme getThemebyTitle(String title){
