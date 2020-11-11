@@ -1,5 +1,6 @@
 package KnowXchange.Backend.Application.Model;
 
+import java.sql.Clob;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,6 +28,8 @@ public class Course {
 	
     private String title;
 	
+    
+    @Column(length = 64000)
 	private String description;
 	
 	private Long tokensCost;
@@ -73,6 +77,7 @@ public class Course {
 		this.title = title;
 	}
 	
+	
 	public String getDescription() {
 		return this.description;
 	}
@@ -80,6 +85,20 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	
+	
+	
+	
+	
+	/*
+	public Clob getDescription() {
+		return this.description;
+	}
+	
+	public void setDescription(Clob description) {
+		this.description = description;
+	}*/
 	
 	public Long getTokensCost() {
 		return this.tokensCost;

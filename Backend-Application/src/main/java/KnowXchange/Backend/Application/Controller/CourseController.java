@@ -61,7 +61,37 @@ public class CourseController {
 	private UserRepository userRepository;
 	
 	
-
+	//____________________________________________________________________________________________________________________
+	//Metodo para insertar un curso
+	/*
+	 El post se envia asi por ejemplo:
+	 localhost:8080/courseController/addNewCoursebyPathVariable/Violin 2/el violin es bello/10/2/3
+	 */
+	@PostMapping(path="/addNewCoursebyPathVariable/{title}/{description}/{tokensCost}/{branch_id}/{ownerId}")
+		  public @ResponseBody Course addNewCoursebyPathVariable(
+				  @PathVariable(value = "title")String title,
+				  @PathVariable(value = "description")String description,
+				  @PathVariable(value = "tokensCost")Long tokensCost,
+				  @PathVariable(value = "branch_id")Integer branch_id,
+				  @PathVariable(value = "ownerId")Integer ownerId
+				  
+		      ) {
+		   
+			
+		    Course course = new Course();
+		    course.setDescription(description);
+		    course.setTitle(title);
+		    course.setTokensCost(tokensCost);	  
+		    course.setBranch(fieldBranchRepository.findById(branch_id).get());
+		    course.setUserOwner(userRepository.findById(ownerId).get()); 
+		    
+		    courseRepository.save(course);
+		    
+		      
+		    return course;
+		    //return "Saved";
+		}
+		//________________________________________________________________________________________________________
 	
 	
 	//===================================================================================================================
