@@ -206,7 +206,7 @@ public class CourseController {
 
 	//Modifique este metodo, le agregue unos parametros y objetos
 	@PostMapping(path="/addNewKXCourse")
-		  public @ResponseBody String addNewKXCourse(
+		  public @ResponseBody Course addNewKXCourse(
 				  @RequestParam String title, 
 				  @RequestParam String description,
 				  @RequestParam Long tokensCost,
@@ -222,9 +222,9 @@ public class CourseController {
 		    course.setBranch(fieldBranchRepository.findById(branch_id).get());
 		    course.setUserOwner(userRepository.findById(ownerId).get()); 
 		    
-		    //courseRepository.save(course);
+		    courseRepository.save(course);
 		    
-		    return courseRepository.save(course).getId().toString();
+		    return course;
 		    //return "Saved";
 		}
 
