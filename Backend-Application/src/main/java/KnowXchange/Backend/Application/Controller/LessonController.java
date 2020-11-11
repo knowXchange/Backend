@@ -1,5 +1,7 @@
 package KnowXchange.Backend.Application.Controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +36,18 @@ public class LessonController {
     private ThemeRepository themeRepository;
 	
 	
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	@GetMapping(path="/getLessonByCourseId/{id}")
+	public @ResponseBody ArrayList<Lesson> getLessonByCourseId(@PathVariable(value = "id")Integer id) {
+		ArrayList<Lesson> lessons = new ArrayList<>();
+		for(Lesson l : lessonRepository.findAll()) {
+			if(l.getCourse().getId().equals(id))
+				  lessons.add(l);
+		}
+		return lessons;
+	}
+	
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	
 //=======================================================================================================================

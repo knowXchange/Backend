@@ -61,6 +61,7 @@ public class CourseController {
 	private UserRepository userRepository;
 	
 	
+
 	
 	
 	//===================================================================================================================
@@ -221,8 +222,10 @@ public class CourseController {
 		    course.setBranch(fieldBranchRepository.findById(branch_id).get());
 		    course.setUserOwner(userRepository.findById(ownerId).get()); 
 		    
-		    courseRepository.save(course);
-		    return "Saved";
+		    //courseRepository.save(course);
+		    
+		    return courseRepository.save(course).getId().toString();
+		    //return "Saved";
 		}
 
 
