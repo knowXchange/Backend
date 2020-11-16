@@ -172,6 +172,8 @@ ___  ___     _            _             _____            _       _        _____
 			,@RequestParam String description) {
 		Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new RuntimeException());
 		lesson.setTitle(title);
+//		System.out.println(id);
+//		System.out.println(lesson.getId());
 		lesson.setDescription(description);
 		lessonRepository.save(lesson);
 		return "Modified";

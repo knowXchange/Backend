@@ -29,7 +29,7 @@ public class Course {
     private String title;
 	
     
-    @Column(length = 64000)
+   //@Column(length = 16000)
 	private String description;
 	
 	private Long tokensCost;
