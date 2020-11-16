@@ -2,8 +2,10 @@ package KnowXchange.Backend.Application.Model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,9 +36,20 @@ public class Lesson {
 	private Course course;
 	//----------------------------------------------------------------------------
 	
+	//---------------------------------------------------------------------------------
+	//un curso puede tener muchas preguntas
+	@JsonIgnore
+	@OneToMany( mappedBy = "lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Question> questions;
+	//---------------------------------------------------------------------------------
+	
 	@JsonIgnore
 	@OneToMany( mappedBy = "lesson")
 	private List<Theme> themes;
+	
+	
+	
+	
 	
 	public Lesson() {
 		

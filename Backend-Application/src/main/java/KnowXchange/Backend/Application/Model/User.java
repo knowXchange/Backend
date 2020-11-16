@@ -5,8 +5,10 @@ package KnowXchange.Backend.Application.Model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,6 +42,14 @@ public class User {
   @JsonIgnore
   @OneToMany( mappedBy = "userTeller" )
   private List<Tutorship> tutorshipsSolved;
+  
+	//---------------------------------------------------------------------------------
+	//un curso puede tener muchas preguntas
+	@JsonIgnore
+	@OneToMany( mappedBy = "asking_user_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Question> asked_questions;
+	//---------------------------------------------------------------------------------
+	
   
   @JsonIgnore
   @OneToMany( mappedBy = "userOwner" )

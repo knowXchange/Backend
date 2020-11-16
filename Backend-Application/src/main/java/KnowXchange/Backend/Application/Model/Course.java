@@ -54,11 +54,11 @@ public class Course {
 	private User userOwner;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy = "courseTaken" )
+	@OneToMany( mappedBy = "courseTaken" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Takes> reserves;
 	
 	@JsonIgnore
-	@OneToMany( mappedBy = "courseTackled" )
+	@OneToMany( mappedBy = "courseTackled"  , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Tackle> tackles;
 	
 	public Course() {
