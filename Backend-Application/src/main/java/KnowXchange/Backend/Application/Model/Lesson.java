@@ -38,9 +38,9 @@ public class Lesson {
 	
 	//---------------------------------------------------------------------------------
 	//un curso puede tener muchas preguntas
-	@JsonIgnore
-	@OneToMany( mappedBy = "lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Question> questions;
+//	@JsonIgnore
+//	@OneToMany( mappedBy = "lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Question> questions;
 	//---------------------------------------------------------------------------------
 	
 	@JsonIgnore

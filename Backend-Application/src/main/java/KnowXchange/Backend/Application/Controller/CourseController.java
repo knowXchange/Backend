@@ -265,7 +265,8 @@ public class CourseController {
 			ArrayList<Course> courses = new ArrayList<>();
 			for(Course c : courseRepository.findAll()) {
 				if(c.getUserOwner().getId().equals(id))
-					  courses.add(c);
+					c.setListTakes(null);  
+					courses.add(c);
 			}
 			return courses;
 		}
@@ -343,6 +344,7 @@ public class CourseController {
 		ArrayList<Course> courses = new ArrayList<>();
 		for(Course c : courseRepository.findAll()) {
 			if(c.getTitle().toUpperCase().contains(word.toUpperCase())) {
+				c.setListTakes(null);
 				courses.add(c);				
 			}
 			
@@ -355,6 +357,7 @@ public class CourseController {
 		ArrayList<Course> courses = new ArrayList<>();
 		for(Course c : courseRepository.findAll()) {
 			if(c.getFieldId() == fieldId) {
+				c.setListTakes(null);
 				courses.add(c);				
 			}
 		}
@@ -365,6 +368,7 @@ public class CourseController {
 	  public @ResponseBody ArrayList<Course> getAllCourses() {
 		ArrayList<Course> courses = new ArrayList<>();
 		for(Course c : courseRepository.findAll()) {
+			c.setListTakes(null);
 			courses.add(c);
 		}
 		return courses;
@@ -375,6 +379,7 @@ public class CourseController {
 		ArrayList<Course> courses = new ArrayList<>();
 		for(Course c : courseRepository.findAll()) {
 			if(c.getId() == id) {
+				c.setListTakes(null);
 				courses.add(c);
 				break;
 			}
