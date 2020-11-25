@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping(path="/questionController")
+@RequestMapping(path="/ReviewController")
 public class ReviewController {
 	
 	@Autowired

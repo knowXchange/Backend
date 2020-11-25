@@ -63,7 +63,7 @@ public class User {
 	//---------------------------------------------------------------------------------
 		//un usuario puede publicar varias resenas
 		@JsonIgnore
-		@OneToMany( mappedBy = "opining_user_id" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		@OneToMany( mappedBy = "opiningUser_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		private List<Review> postedReviews;
 		//---------------------------------------------------------------------------------
 		
