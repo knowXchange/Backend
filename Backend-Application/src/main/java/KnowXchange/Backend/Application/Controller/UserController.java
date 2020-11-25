@@ -56,12 +56,7 @@ public class UserController {
   public PasswordEncoder encoder() {
 	  return new BCryptPasswordEncoder();
   }
-  
-  
-  
-  
-  
-  
+    
   
   //____________________________________________________________________________________
   //METODOS CREAR PERFIL BY SANTIAGO
@@ -155,13 +150,26 @@ public class UserController {
   
   @PutMapping(path = "/register-into-course")
   public @ResponseBody String registerIntoCourse(@RequestParam Integer userId,@RequestParam Integer courseId) {
+	  String ans = "";
+	  boolean wasFound = false;
 	  User userObtained = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
 	  Course courseObtained = this.courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException());
-	  Takes take = new Takes();
-	  take.setCourseTaken(courseObtained);
-	  take.setUserAssistant(userObtained);
-	  this.takesRepository.save(take);
-	  return "Registered";
+	  for(Takes t:this.takesRepository.findAll()) {
+		  if(t.getUserAssistant().getId() == userId && t.getCourseTaken().getId() == courseId) {
+			  wasFound = true;
+			  break;
+		  }
+	  }
+	  if(!wasFound) {
+		  Takes take = new Takes();
+		  take.setCourseTaken(courseObtained);
+		  take.setUserAssistant(userObtained);
+		  this.takesRepository.save(take);
+		  ans = "Registered";
+	  }else {
+		  ans = "The Student is Already Registered";
+	  }
+	  return ans;
   }
   
   
@@ -194,10 +202,5 @@ public class UserController {
 		
 		return answers;
 	}
-  
-  
-  
-  
-  
-  
+   
 }
