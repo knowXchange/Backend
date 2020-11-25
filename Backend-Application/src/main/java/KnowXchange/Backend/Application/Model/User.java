@@ -60,6 +60,15 @@ public class User {
 	//---------------------------------------------------------------------------------
 
 	
+	//---------------------------------------------------------------------------------
+		//un usuario puede publicar varias resenas
+		@JsonIgnore
+		@OneToMany( mappedBy = "opining_user_id" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		private List<Review> postedReviews;
+		//---------------------------------------------------------------------------------
+		
+		
+	
 	
   @JsonIgnore
   @OneToMany( mappedBy = "userOwner" )

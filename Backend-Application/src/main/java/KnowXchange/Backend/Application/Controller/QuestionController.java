@@ -68,6 +68,7 @@ public class QuestionController {
 		    question.SetAsking_user( userRepository.findById(studentId).get()  );
 		    question.setLesson(lessonRepository.findById(lessonId).get());
 		    questionRepository.save(question);
+		    question.setLesson(null);
 		    return question;
 		    //return "Saved";
 		}
@@ -88,6 +89,7 @@ public class QuestionController {
 		    question.SetAsking_user( userRepository.findById(studentId).get()  );
 		    question.setLesson(lessonRepository.findById(lessonId).get());
 		    questionRepository.save(question);
+		    question.setLesson(null);
 		    return question;
 		    //return "Saved";
 		}

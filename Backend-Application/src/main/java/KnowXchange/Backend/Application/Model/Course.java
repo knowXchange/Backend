@@ -49,6 +49,13 @@ public class Course {
 	private List<Lesson> lessons;
 	//---------------------------------------------------------------------------------
 	
+	//---------------------------------------------------------------------------------
+	//un curso es calificado en varias resenas
+	@JsonIgnore
+	@OneToMany( mappedBy = "reviewedCourse_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Review> courseReviews;
+	//---------------------------------------------------------------------------------
+	
 	@ManyToOne
 	@JoinColumn(name = "user_owner_id")
 	private User userOwner;
