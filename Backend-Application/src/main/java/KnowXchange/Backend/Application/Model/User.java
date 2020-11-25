@@ -45,9 +45,9 @@ public class User {
   
 	//---------------------------------------------------------------------------------
 	//un curso puede tener muchas preguntas
-	@JsonIgnore
-	@OneToMany( mappedBy = "asking_user_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Question> asked_questions;
+//	@JsonIgnore
+//	@OneToMany( mappedBy = "asking_user_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Question> asked_questions;
 	//---------------------------------------------------------------------------------
 	
   
@@ -68,6 +68,10 @@ public class User {
   @JsonIgnore
   @OneToMany( mappedBy = "userAssistant" )
   private List<Takes> reserves;
+  
+ // @JsonIgnore
+ // @OneToMany( mappedBy = "userWriter" )
+ // private List<Review> reviews;
   
   public User() {
 	  
@@ -128,6 +132,7 @@ public class User {
   public void setTutorshipsReceived(List<Tutorship> tutorshipsReceived){
 	  this.tutorshipsReceived = tutorshipsReceived;
   }
+<<<<<<< HEAD
   
   
   
@@ -144,6 +149,24 @@ public class User {
   
   
   
+=======
+
+public List<Course> getCourses() {
+	return courses;
+}
+
+public void setCourses(List<Course> courses) {
+	this.courses = courses;
+}
+
+public List<Takes> getReserves() {
+	return reserves;
+}
+
+public void setReserves(List<Takes> reserves) {
+	this.reserves = reserves;
+}
+>>>>>>> 498feb4cfded4024c6471b0e4c8d752326b07d71
   
   
 }

@@ -117,7 +117,9 @@ public class UserController {
 
   @GetMapping(path="/getById/{id}")
   public @ResponseBody User getUserById(@PathVariable(value = "id")Integer id) {
-	  return userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+	  User userObtained = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+	  userObtained.setCourses(null);
+	  return userObtained;
   }
   
   /*
@@ -151,8 +153,8 @@ public class UserController {
 	  
   }
   
-  @PutMapping(path = "/register-into-course/{userId}/{courseId}")
-  public @ResponseBody String registerIntoCourse(@PathVariable(value = "userId")Integer userId,@PathVariable(value = "courseId")Integer courseId) {
+  @PutMapping(path = "/register-into-course")
+  public @ResponseBody String registerIntoCourse(@RequestParam Integer userId,@RequestParam Integer courseId) {
 	  User userObtained = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
 	  Course courseObtained = this.courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException());
 	  Takes take = new Takes();

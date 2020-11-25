@@ -37,10 +37,17 @@ public class Lesson {
 	//----------------------------------------------------------------------------
 	
 	//---------------------------------------------------------------------------------
+<<<<<<< HEAD
 	//una clase tener muchas preguntas
 	@JsonIgnore
 	@OneToMany( mappedBy = "lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Question> questions;
+=======
+	//un curso puede tener muchas preguntas
+//	@JsonIgnore
+//	@OneToMany( mappedBy = "lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<Question> questions;
+>>>>>>> 498feb4cfded4024c6471b0e4c8d752326b07d71
 	//---------------------------------------------------------------------------------
 	
 	@JsonIgnore

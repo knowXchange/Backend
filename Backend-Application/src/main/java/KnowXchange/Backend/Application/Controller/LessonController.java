@@ -41,8 +41,12 @@ public class LessonController {
 	public @ResponseBody ArrayList<Lesson> getLessonByCourseId(@PathVariable(value = "id")Integer id) {
 		ArrayList<Lesson> lessons = new ArrayList<>();
 		for(Lesson l : lessonRepository.findAll()) {
-			if(l.getCourse().getId().equals(id))
-				  lessons.add(l);
+			Course c = l.getCourse();
+			c.setListTakes(null);
+			c.setListTackles(null);
+			if(c.getId().equals(id)) {
+				lessons.add(l);
+			}
 		}
 		return lessons;
 	}
@@ -253,5 +257,4 @@ ___  ___     _            _             _____            _       _        _____
 		return "Deleted";
 	}
 	
-
 }
