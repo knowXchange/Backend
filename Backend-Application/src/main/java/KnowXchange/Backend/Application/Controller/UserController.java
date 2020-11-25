@@ -10,6 +10,9 @@ import KnowXchange.Backend.Application.Model.User;
 import KnowXchange.Backend.Application.Repository.CourseRepository;
 import KnowXchange.Backend.Application.Repository.TakesRepository;
 import KnowXchange.Backend.Application.Repository.UserRepository;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import KnowXchange.Backend.Application.Repository.AnswerRepository;
+import KnowXchange.Backend.Application.Model.Answer;
+
 @Controller
 @CrossOrigin("*")
 @RequestMapping(path="/userController")
@@ -38,6 +44,11 @@ public class UserController {
   
   @Autowired
   private TakesRepository takesRepository;
+  
+  @Autowired
+  private AnswerRepository answerRepository;
+  
+  
   
   private PasswordEncoder passwordEncoder = encoder();
 
@@ -150,4 +161,41 @@ public class UserController {
 	  this.takesRepository.save(take);
 	  return "Registered";
   }
+  
+  
+  @GetMapping(path="/getUserPostedAnswersByPathVariable/{id}")
+  public @ResponseBody ArrayList<Answer> getUserPostedAnswersByPathVariable(@PathVariable(value = "id")Integer id) {
+	  ArrayList<Answer> answers = new ArrayList<>();
+		
+		for(Answer c : answerRepository.findAll()) {
+			if(c.getPersonAnswering().getId() == id) {
+				answers.add(c);				
+			}
+		}
+		
+		return answers;
+  }
+  
+  
+  
+  
+  
+	@GetMapping(path = "/getUserPostedAnswersByRequestParameter")
+	public @ResponseBody ArrayList<Answer> getUserPostedAnswersByRequestParameter(@RequestParam Integer id) {
+		ArrayList<Answer> answers = new ArrayList<>();
+		
+		for(Answer c : answerRepository.findAll()) {
+			if(c.getPersonAnswering().getId() == id) {
+				answers.add(c);				
+			}
+		}
+		
+		return answers;
+	}
+  
+  
+  
+  
+  
+  
 }

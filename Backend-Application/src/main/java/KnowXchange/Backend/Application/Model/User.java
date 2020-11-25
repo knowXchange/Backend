@@ -51,6 +51,16 @@ public class User {
 	//---------------------------------------------------------------------------------
 	
   
+
+	//---------------------------------------------------------------------------------
+	//un usuario puede responder muchas preguntas publicando repuestas
+	@JsonIgnore
+	@OneToMany( mappedBy = "personAnswering_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Answer> postedAnswers;
+	//---------------------------------------------------------------------------------
+
+	
+	
   @JsonIgnore
   @OneToMany( mappedBy = "userOwner" )
   private List<Course> courses;
@@ -118,4 +128,22 @@ public class User {
   public void setTutorshipsReceived(List<Tutorship> tutorshipsReceived){
 	  this.tutorshipsReceived = tutorshipsReceived;
   }
+  
+  
+  
+  
+  
+  public List<Answer> getPostedAnswers(){
+	  return this.postedAnswers;
+  }
+
+  public void setPostedAnswers(List<Answer> postedAnswers){
+	  this.postedAnswers = postedAnswers;
+  }
+  
+  
+  
+  
+  
+  
 }

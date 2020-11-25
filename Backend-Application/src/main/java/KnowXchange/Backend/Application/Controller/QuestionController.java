@@ -17,6 +17,7 @@ import KnowXchange.Backend.Application.Model.Question;
 import KnowXchange.Backend.Application.Repository.LessonRepository;
 import KnowXchange.Backend.Application.Repository.QuestionRepository;
 import KnowXchange.Backend.Application.Repository.UserRepository;
+import KnowXchange.Backend.Application.Repository.AnswerRepository;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,9 @@ public class QuestionController {
 	@Autowired
 	private LessonRepository lessonRepository;
 		
-	  
+	@Autowired
+	private QuestionRepository answerRepository;
+	
 	
 	
 	//____________________________________________________________________________________________________________________
@@ -158,6 +161,7 @@ public class QuestionController {
 			}	
 			return questions;
 	}
+	//___________________________________________________________________________________
 	
 	
 }
