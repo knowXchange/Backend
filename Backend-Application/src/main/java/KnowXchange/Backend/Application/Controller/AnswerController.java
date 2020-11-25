@@ -65,7 +65,7 @@ public class AnswerController {
 	   
 		
 	    Answer answer = new Answer();
-	    String comentario = userRepository.findById(personId).get().getName() + "\r\n"+text;
+	    String comentario = text;
 	    answer.setText(comentario);
 	    answer.setSolvedQuestion(questionRepository.findById(questionId).get());
 	    answer.setPersonAnswering(userRepository.findById(personId).get());
@@ -84,7 +84,7 @@ public class AnswerController {
 	   
 		
 	  	Answer answer = new Answer();
-	  	String comentario = userRepository.findById(personId).get().getName() + "\r\n"+text;
+	  	String comentario = text;
 	    answer.setText(comentario);
 	    answer.setSolvedQuestion(questionRepository.findById(questionId).get());
 	    answer.setPersonAnswering(userRepository.findById(personId).get());
@@ -166,6 +166,7 @@ public class AnswerController {
 		
 			for(Answer c : answerRepository.findAll()) {
 				if(c.getSolvedQuestion().getId() == id) {
+					c.setSolvedQuestion(null);
 					answers.add(c);				
 				}
 			}	
@@ -178,6 +179,7 @@ public class AnswerController {
 		
 		for(Answer c : answerRepository.findAll()) {
 			if(c.getSolvedQuestion().getId() == id) {
+				c.setSolvedQuestion(null);
 				answers.add(c);				
 			}
 		}	

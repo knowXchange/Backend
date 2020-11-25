@@ -144,6 +144,7 @@ public class QuestionController {
 		
 			for(Question c : questionRepository.findAll()) {
 				if(c.getLesson().getId() == id) {
+					c.setLesson(null);
 					questions.add(c);				
 				}
 			}	
@@ -156,6 +157,7 @@ public class QuestionController {
 		
 			for(Question c : questionRepository.findAll()) {
 				if(c.getLesson().getId() == id) {
+					c.setLesson(null);
 					questions.add(c);				
 				}
 			}	
