@@ -132,11 +132,7 @@ public class User {
   public void setTutorshipsReceived(List<Tutorship> tutorshipsReceived){
 	  this.tutorshipsReceived = tutorshipsReceived;
   }
-<<<<<<< HEAD
-  
-  
-  
-  
+
   
   public List<Answer> getPostedAnswers(){
 	  return this.postedAnswers;
@@ -147,10 +143,6 @@ public class User {
   }
   
   
-  
-  
-=======
-
 public List<Course> getCourses() {
 	return courses;
 }
@@ -166,7 +158,5 @@ public List<Takes> getReserves() {
 public void setReserves(List<Takes> reserves) {
 	this.reserves = reserves;
 }
->>>>>>> 498feb4cfded4024c6471b0e4c8d752326b07d71
-  
   
 }
