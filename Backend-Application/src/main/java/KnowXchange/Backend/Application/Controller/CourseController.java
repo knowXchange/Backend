@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import KnowXchange.Backend.Application.Model.Course;
 import KnowXchange.Backend.Application.Model.FieldBranch;
 import KnowXchange.Backend.Application.Model.KnowledgeField;
+import KnowXchange.Backend.Application.Model.Takes;
 import KnowXchange.Backend.Application.Model.Theme;
 import KnowXchange.Backend.Application.Model.User;
 import KnowXchange.Backend.Application.Repository.CourseRepository;
@@ -264,9 +265,10 @@ public class CourseController {
 		  public @ResponseBody ArrayList<Course> getCourseByOwner(@PathVariable(value = "id")Integer id) {
 			ArrayList<Course> courses = new ArrayList<>();
 			for(Course c : courseRepository.findAll()) {
-				if(c.getUserOwner().getId().equals(id))
+				if(c.getUserOwner().getId().equals(id)) {
 					c.setListTakes(null);  
 					courses.add(c);
+				}
 			}
 			return courses;
 		}
@@ -382,6 +384,18 @@ public class CourseController {
 				c.setListTakes(null);
 				courses.add(c);
 				break;
+			}
+		}
+		return courses;
+	}
+	
+	@GetMapping(path="/getCoursesEnrrolled/{id}")
+	  public @ResponseBody ArrayList<Course> getCoursesEnrrolled(@PathVariable(value = "id")Integer id) {
+		ArrayList<Course> courses = new ArrayList<>();
+		for(Takes t : takesRepository.findAll() ) {
+			if(t.getUserAssistant().getId() == id) {
+				t.getCourseTaken().setListTakes(null);
+				courses.add(t.getCourseTaken());
 			}
 		}
 		return courses;
