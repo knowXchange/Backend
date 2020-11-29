@@ -52,7 +52,12 @@ public class ReviewController {
 					  @PathVariable(value = "grade")Double grade,
 					  @PathVariable(value = "opiningUserId")Integer opiningUserId,
 					  @PathVariable(value = "reviewedCourseId")Integer reviewedCourseId
-			      ) {
+			      ) throws Exception {
+			
+			if(!(grade>=0.0 && grade <=5.0)) {
+				throw new Exception("La valoracion del curso debe ser de 1 a 5");
+			}
+			
 			   
 			Review review = new Review();
 		    review.setGrade(grade);
@@ -60,8 +65,10 @@ public class ReviewController {
 		    review.setOpiningUser(userRepository.findById(opiningUserId).get());
 		    review.setReviewed_Course(courseRepository.findById(reviewedCourseId).get());
 		    reviewRepository.save(review);
+		    review.setReviewed_Course(null);
 		    return review;
 		    //return "Saved";
+			
 			   
 			}
 			
@@ -72,15 +79,19 @@ public class ReviewController {
 					  @RequestParam Double grade,
 					  @RequestParam Integer opiningUserId,
 					  @RequestParam Integer reviewedCourseId
-			      ) {
+			      ) throws Exception {
 			   
-				
+			if(!(grade>=0.0 && grade <=5.0)) {
+				throw new Exception("La valoracion del curso debe ser de 1 a 5");
+			}
+			
 			Review review = new Review();
 		    review.setGrade(grade);
 		    review.setDescription(description);
 		    review.setOpiningUser(userRepository.findById(opiningUserId).get());
 		    review.setReviewed_Course(courseRepository.findById(reviewedCourseId).get());
 		    reviewRepository.save(review);
+		    review.setReviewed_Course(null);
 		    return review;
 		    //return "Saved";
 			}
@@ -97,13 +108,20 @@ public class ReviewController {
 
 		@GetMapping(path="/getByIdByPathVariable/{id}")
 		  public @ResponseBody Review getReviewByIdByPathVariable(@PathVariable(value = "id")Integer id) {
-			  return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException());
+			  Review r = reviewRepository.findById(id).get();
+			  r.setReviewed_Course(null);
+			  return r;
+			  //System.out.println(x);
+			  //return x;
+			  //return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException());
 		}
 
 		@GetMapping(path="/getByIdByRequestParameter")
 		  public @ResponseBody Review getReviewByIdByRequestParameter(
 				  @RequestParam Integer id) {
-			return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException());
+			Review r = reviewRepository.findById(id).get();
+			  r.setReviewed_Course(null);
+			  return r;
 		}
 
 
@@ -175,6 +193,57 @@ public class ReviewController {
 					return reviews;
 				}
 			//___________________________________________________________________________________
+				
+				
+				
+				
+				
+				//________________________________________________________________________________________________________
+
+		//FUNCION PARA REVISAR SI UN USUARIO EVALUO UN CURSO SI O NO
+				
+				
+				@GetMapping(path="/didUserPostedReviewByPathVariable/{opiningUserId}/{reviewedCourseId}")
+					  public @ResponseBody boolean didUserPostedReview(
+							  @PathVariable(value = "opiningUserId")Integer opiningUserId,
+							  @PathVariable(value = "reviewedCourseId")Integer reviewedCourseId
+					      ) {
+					   
+						
+				for(Review c : reviewRepository.findAll()) {
+					if(c.getOpiningUser().getId() == opiningUserId && c.getReviewed_Course().getId() == reviewedCourseId) {
+						return true;		
+					}
+				}	
+		
+		return false;  
+					}
+				
+				
+				
+				@GetMapping(path="/didUserPostedReviewByRequestParameter")
+				  public @ResponseBody boolean addQuestionByRequestParameter(
+						  @RequestParam Integer opiningUserId,
+						  @RequestParam Integer reviewedCourseId
+				      ){
+					   
+						
+				for(Review c : reviewRepository.findAll()) {
+					if(c.getOpiningUser().getId() == opiningUserId && c.getReviewed_Course().getId() == reviewedCourseId) {
+						return true;		
+					}
+				}	
+		
+		return false;  
+					}
+				
+				
+					
+
+				//____________________________________________________________________________________
+				
+				
+				
 	
 
 }

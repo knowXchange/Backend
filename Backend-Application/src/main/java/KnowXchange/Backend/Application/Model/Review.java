@@ -2,15 +2,40 @@ package KnowXchange.Backend.Application.Model;
 
 import javax.persistence.*;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 @Entity
-@Table(name = "review")
+@Table(name = "Review")
 public class Review {
 	
 	
 	@Id
-	@Column(name = "id_of_review")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private Integer reviewId;
+	@Column(name = "Review_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	//(strategy=GenerationType.SEQUENCE)
+	private Integer id;
+	
+	
+	private double grade;
+	
+	//@Column(length = 9000)
+	private String description;
 	
 	
 	
@@ -33,13 +58,10 @@ public class Review {
 		
 		
 	
-	@Column(name = "grade")
-	private double grade;
-	
-	@Column(length = 9000)
-	private String description;
-	
-	
+	public Integer getId() {
+		return this.id;
+	}
+
 	public Double getGrade() {
 		return this.grade;
 	}
@@ -49,8 +71,8 @@ public class Review {
 	}
 	
 	
-	public Double getDescription() {
-		return this.grade;
+	public String getDescription() {
+		return this.description;
 	}
 	
 	public void setDescription(String description) {
