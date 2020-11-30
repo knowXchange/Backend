@@ -47,7 +47,15 @@ public class Lesson {
 	@OneToMany( mappedBy = "lesson")
 	private List<Theme> themes;
 	
+	//-------------------------------------------------------------------------------------
 	
+
+	//---------------------------------------------------------------------------------
+	//una clase-leccion puede tener varios recursos asociados
+	@JsonIgnore
+	@OneToMany( mappedBy = "supported_lesson_pointer" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<LearningResource> learningResources;
+	//---------------------------------------------------------------------------------
 	
 	
 	
