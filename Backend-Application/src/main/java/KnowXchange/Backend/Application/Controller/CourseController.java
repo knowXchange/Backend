@@ -32,6 +32,9 @@ import KnowXchange.Backend.Application.Repository.UserRepository;
 
 import java.util.ArrayList;
 
+import java.util.Random;
+
+
 @Controller
 @CrossOrigin("*")
 @RequestMapping(path="/courseController")
@@ -447,4 +450,136 @@ public class CourseController {
 		}
 	
 	//___________________________________________________________________________________________________
+		
+		
+		
+		
+		
+		//FUNCION PARA OBTENER UNA LISTA ALEATORIA DE CURSOS
+		/*
+		 -La funcion recibe un entero cursos_aleatorios que indica cuantos cursos se quieren.
+		 -La funcion devuelve una lista de cursos.
+		 
+		 -La lista que se devuelve no tiene cursos repetidos.
+		 
+		 -si se piden mas cursos de los que hay, se devuelven todos los que hay sin repeticiones.
+		 Es decir si el sistema tiene 3 cursos y se piden 5 se devuelven los 3.
+		 -se se piden 0 cursos se devuelve lista vacia [].
+		 -
+		 */
+		//==========================================================================================
+		@GetMapping(path="/getRandomCoursesByPathVariable/{cursos_aleatorios}")
+		  public @ResponseBody ArrayList<Course> getRandomCoursesByPathVariable(@PathVariable(value = "cursos_aleatorios")Integer cursos_aleatorios) {
+			ArrayList<Course> courses = new ArrayList<>();
+			ArrayList<Long> repeticiones = new ArrayList<>();
+			
+			//caso vacio
+			if (cursos_aleatorios==0) {
+				return courses;
+			}
+			
+			//Numero de cursos en el sistema
+			long l =0;
+			for(Course c : courseRepository.findAll()) {
+				l++;
+			}
+			
+			//A lo mas devolver una lista con todos los cursos
+			long n = cursos_aleatorios;
+			if(l<= cursos_aleatorios) {
+				n = l;
+			}
+			
+			
+			//System.out.println("tamano: " + l);
+			
+			for (int i=0;i<n;i++) {
+				
+			      double al = Math.random();
+			      long iesimo = ((long) (al * (l)))%l;
+			      
+					while(repeticiones.contains(iesimo)) {
+						  al = Math.random();
+					      iesimo = ((long) (al * (l)))%l;
+					}
+					
+					repeticiones.add(iesimo);
+					int r =0;
+					for(Course c : courseRepository.findAll()) {
+						if(r == iesimo) {
+							c.setListTakes(null);
+							c.setListTackles(null);
+							courses.add(c);
+							break;
+						}
+						r++;
+					}
+			}
+				      
+			  return courses;
+		}
+		
+		//==================================================================================
+		
+		
+		
+
+		
+		//==========================================================================================
+		@GetMapping(path="/getRandomCoursesByRequestParameter")
+		  public @ResponseBody ArrayList<Course> getRandomCoursesByRequestParameter(
+				  @RequestParam Integer cursos_aleatorios) {
+			
+			ArrayList<Course> courses = new ArrayList<>();
+			ArrayList<Long> repeticiones = new ArrayList<>();
+			
+			//caso vacio
+			if (cursos_aleatorios==0) {
+				return courses;
+			}
+			
+			//Numero de cursos en el sistema
+			long l =0;
+			for(Course c : courseRepository.findAll()) {
+				l++;
+			}
+			
+			//A lo mas devolver una lista con todos los cursos
+			long n = cursos_aleatorios;
+			if(l<= cursos_aleatorios) {
+				n = l;
+			}
+			
+			
+			//System.out.println("tamano: " + l);
+			
+			for (int i=0;i<n;i++) {
+				
+			      double al = Math.random();
+			      long iesimo = ((long) (al * (l)))%l;
+			      
+					while(repeticiones.contains(iesimo)) {
+						  al = Math.random();
+					      iesimo = ((long) (al * (l)))%l;
+					}
+					
+					repeticiones.add(iesimo);
+					int r =0;
+					for(Course c : courseRepository.findAll()) {
+						if(r == iesimo) {
+							c.setListTakes(null);
+							c.setListTackles(null);
+							courses.add(c);
+							break;
+						}
+						r++;
+					}
+			}
+				      
+			  return courses;
+		}
+		
+		//==================================================================================
+		
+		
 }
