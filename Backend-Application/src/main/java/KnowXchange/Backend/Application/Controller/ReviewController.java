@@ -63,7 +63,12 @@ public class ReviewController {
 		    review.setGrade(grade);
 		    review.setDescription(description);
 		    review.setOpiningUser(userRepository.findById(opiningUserId).get());
-		    review.setReviewed_Course(courseRepository.findById(reviewedCourseId).get());
+		    
+		    Course curso_calificado = courseRepository.findById(reviewedCourseId).get();
+		    curso_calificado.updateCourseScore(grade);
+		    courseRepository.save(curso_calificado);
+		    
+		    review.setReviewed_Course(curso_calificado);
 		    reviewRepository.save(review);
 		    review.setReviewed_Course(null);
 		    return review;
@@ -89,7 +94,12 @@ public class ReviewController {
 		    review.setGrade(grade);
 		    review.setDescription(description);
 		    review.setOpiningUser(userRepository.findById(opiningUserId).get());
-		    review.setReviewed_Course(courseRepository.findById(reviewedCourseId).get());
+		    
+		    Course curso_calificado = courseRepository.findById(reviewedCourseId).get();
+		    curso_calificado.updateCourseScore(grade);
+		    courseRepository.save(curso_calificado);
+		    
+		    review.setReviewed_Course(curso_calificado);
 		    reviewRepository.save(review);
 		    review.setReviewed_Course(null);
 		    return review;
@@ -142,6 +152,12 @@ public class ReviewController {
 			@DeleteMapping(path = "/deleteByPathVariable/{id}")
 			public @ResponseBody String deleteQuestionByPathVariable(@PathVariable(value = "id")Integer id) {
 				  Review reviewReceived = reviewRepository.findById(id).orElseThrow(() -> new RuntimeException());
+				  double rollback_grade = reviewReceived.getGrade();
+				  
+				  Course curso_actualizado = reviewReceived.getReviewed_Course();
+				  curso_actualizado.calculateCourseScoreReviewDeletion(rollback_grade);
+				  courseRepository.save(curso_actualizado);
+				  
 				  reviewRepository.delete(reviewReceived);
 				  return "Deleted";
 			}
@@ -150,6 +166,12 @@ public class ReviewController {
 			@DeleteMapping(path = "/deleteByRequestParameter")
 			public @ResponseBody String deleteByRequestParameter(@RequestParam Integer id) {
 				  Review reviewReceived = reviewRepository.findById(id).orElseThrow(() -> new RuntimeException());
+				  double rollback_grade = reviewReceived.getGrade();
+				  
+				  Course curso_actualizado = reviewReceived.getReviewed_Course();
+				  curso_actualizado.calculateCourseScoreReviewDeletion(rollback_grade);
+				  courseRepository.save(curso_actualizado);
+				  
 				  reviewRepository.delete(reviewReceived);
 				  return "Deleted";
 			}

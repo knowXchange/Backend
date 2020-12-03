@@ -83,6 +83,10 @@ public class CourseController {
 		   
 			
 		    Course course = new Course();
+		    course.setNumber_of_reviews(0);
+		    course.setScore_accumulator(0.0);
+		    course.setAverageScore(0.0);
+		    
 		    course.setDescription(description);
 		    course.setTitle(title);
 		    course.setTokensCost(tokensCost);	  
@@ -250,6 +254,10 @@ public class CourseController {
 		   
 			
 		    Course course = new Course();
+		    course.setNumber_of_reviews(0);
+		    course.setScore_accumulator(0.0);
+		    course.setAverageScore(0.0);
+		        
 		    course.setDescription(description);
 		    course.setTitle(title);
 		    course.setTokensCost(tokensCost);	  
@@ -278,18 +286,7 @@ public class CourseController {
 	
 	//_____________________________________________________________________________________-
 	
-	@PostMapping(path="/add")
-	  public @ResponseBody String addNewCourse (@RequestParam String title
-	      , @RequestParam String description
-	      ,@RequestParam Long tokensCost) {
-	   
-	    Course course = new Course();
-	    course.setDescription(description);
-	    course.setTitle(title);
-	    course.setTokensCost(tokensCost);
-	    courseRepository.save(course);
-	    return "Saved";
-	}
+
 	
 	//_____________________________________________________________________________________________
 		

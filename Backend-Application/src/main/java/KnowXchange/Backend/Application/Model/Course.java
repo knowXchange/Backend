@@ -34,6 +34,12 @@ public class Course {
 	
 	private Long tokensCost;
 
+	
+	private Integer number_of_reviews;
+	private Double score_accumulator;
+	private Double average_score;
+	
+	
 	//---------------------------------------------------------------------------------
 	//Un curso se enmarca en un area del conocimiento
 	@ManyToOne
@@ -156,4 +162,50 @@ public class Course {
 	public Integer getFieldId() {
 		return this.fieldbranchPointer.getFieldFK();
 	}
+	
+	
+	public Integer getNumber_of_reviews() {
+		return this.number_of_reviews;
+	}
+	
+	
+	public void setNumber_of_reviews(Integer number_of_reviews) {
+		this.number_of_reviews = number_of_reviews;
+	}
+	
+	
+	public Double getAverageScore() {
+		return this.average_score;
+	}
+	
+	
+	public void setAverageScore(Double average_score) {
+		this.average_score = average_score;
+	}
+	
+	public Double getScore_accumulator() {
+		return this.score_accumulator;
+	}
+	
+	
+	public void setScore_accumulator(Double score_accumulator) {
+		this.score_accumulator = score_accumulator;
+	}
+	
+	
+	
+	
+	public void updateCourseScore(Double score) {
+		this.number_of_reviews = this.number_of_reviews + 1;
+		this.score_accumulator = this.score_accumulator + score;
+		this.average_score = ((double)(this.score_accumulator)/(double)(this.number_of_reviews))  ;
+	}
+	
+	public void calculateCourseScoreReviewDeletion(Double score) {
+		this.number_of_reviews = this.number_of_reviews - 1;
+		this.score_accumulator = this.score_accumulator - score;
+		this.average_score = ((double)(this.score_accumulator)/(double)(this.number_of_reviews))  ;
+	}
+	
+	
 }
