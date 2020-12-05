@@ -61,6 +61,7 @@ public class ReviewController {
 			   
 			Review review = new Review();
 		    review.setGrade(grade);
+		    
 		    review.setDescription(description);
 		    review.setOpiningUser(userRepository.findById(opiningUserId).get());
 		    

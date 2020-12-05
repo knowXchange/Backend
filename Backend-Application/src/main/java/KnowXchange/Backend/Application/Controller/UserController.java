@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,20 +63,42 @@ public class UserController {
   //____________________________________________________________________________________
   //METODOS CREAR PERFIL BY SANTIAGO
   
-  @PutMapping(path = "/modifyUser/{id}")
+  /*@PutMapping(path = "/modifyUser/{id}")
   public @ResponseBody String modifyUser(@PathVariable(value = "id")Integer id,@RequestParam String email, @RequestParam String description) {
 	  User userReceived = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
 	  userReceived.setEmail(email);
 	  userReceived.setDescription(description);
 	  userRepository.save(userReceived);
 	  return "Modified";
+  }*/
+  
+  @PutMapping(path = "/modifyUser")
+  public ResponseEntity<Void> modifyUser(@RequestBody User user) {
+	  User existingUser = userRepository.findById(user.getId()).get();
+	  if(existingUser.getId().equals(null))
+		  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	  existingUser.setEmail(user.getEmail());
+	  existingUser.setDescription(user.getDescription());
+	  userRepository.save( existingUser );
+	  return new ResponseEntity<>( HttpStatus.OK );
   }
-  @PutMapping(path = "/modifyPassword/{id}")
+  
+ /* @PutMapping(path = "/modifyPassword/{id}")
   public @ResponseBody String modifyPassword(@PathVariable(value = "id")Integer id,@RequestParam String password) {
 	  User userReceived = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
 	  userReceived.setPassword(passwordEncoder.encode(password));
 	  userRepository.save(userReceived);
 	  return "Modified";
+  }*/
+  
+  @PutMapping(path = "/modifyPassword")
+  public ResponseEntity<Void> modifyPassword(@RequestBody User user) {
+	  User existingUser = userRepository.findById(user.getId()).get();
+	  if(existingUser.getId().equals(null))
+		  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	  existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+	  userRepository.save( existingUser );
+	  return new ResponseEntity<>( HttpStatus.OK );
   }
   
   
@@ -83,8 +107,17 @@ public class UserController {
   
   
   
-  
-  
+  @PostMapping(path = "/addUser")
+  public ResponseEntity<Void> addUser(@RequestBody User user) {
+	  for (User us: userRepository.findAll()) {
+		if(user.getName().equals(us.getName())){
+			return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+		}
+	  }
+	  user.setPassword(passwordEncoder.encode(user.getPassword()));
+	  userRepository.save( user );
+	  return new ResponseEntity<>( HttpStatus.CREATED );
+  }
   
   
   @PostMapping(path="/add")
@@ -136,7 +169,7 @@ public class UserController {
 	  return "Deleted";
   }
   
-  @GetMapping(path="/get-login")
+  /*@GetMapping(path="/get-login")
   public @ResponseBody int getLoginValidation( @RequestParam String name, @RequestParam String password) {
     // This returns a JSON or XML with the users
 	  Iterable<User> temp = userRepository.findAll();
@@ -146,6 +179,17 @@ public class UserController {
 	  }
 	  return 0;
 	  
+  }*/
+  
+  @PostMapping(path="/get-login")
+  public ResponseEntity<String> getLoginValidation(@RequestBody User user) {
+    // This returns a JSON or XML with the users
+	  Iterable<User> temp = userRepository.findAll();
+	  for(User u: temp) {
+		  if(u.getName().equals(user.getName()) && passwordEncoder.matches(user.getPassword(),u.getPassword()))
+				  return new ResponseEntity<>(u.getId().toString(), HttpStatus.OK);
+	  }
+	  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	  
   }
   
   @PutMapping(path = "/register-into-course")
