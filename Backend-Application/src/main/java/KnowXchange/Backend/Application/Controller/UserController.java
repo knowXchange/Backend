@@ -154,6 +154,10 @@ public class UserController {
 	  boolean wasFound = false;
 	  User userObtained = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
 	  Course courseObtained = this.courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException());
+	  if(userObtained.getTokens()<courseObtained.getTokensCost()) {
+		  return "Tokens insuficientes";
+	  }else {
+	  
 	  for(Takes t:this.takesRepository.findAll()) {
 		  if(t.getUserAssistant().getId() == userId && t.getCourseTaken().getId() == courseId) {
 			  wasFound = true;
@@ -165,11 +169,22 @@ public class UserController {
 		  take.setCourseTaken(courseObtained);
 		  take.setUserAssistant(userObtained);
 		  this.takesRepository.save(take);
+		  
+		  //	Al usuario que inscribe se le descuentan los tokens que cuesta el curso
+		  userObtained.spendTokens(courseObtained.getTokensCost());
+		  userRepository.save(userObtained);
+		  
+		  //Al tutor del curso inscrito se le agregan los tokens pago
+		  User ownerOfCourse =  courseObtained.getUserOwner();
+		  ownerOfCourse.getTokenPayment(courseObtained.getTokensCost());
+		  userRepository.save(ownerOfCourse);
+		  
 		  ans = "Registered";
 	  }else {
 		  ans = "The Student is Already Registered";
 	  }
 	  return ans;
+	  }
   }
   
   

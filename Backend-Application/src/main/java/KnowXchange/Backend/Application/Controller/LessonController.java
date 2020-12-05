@@ -246,6 +246,7 @@ ___  ___     _            _             _____            _       _        _____
 		Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new RuntimeException());
 		lesson.setTitle(title);
 		lesson.setDescription(description);
+		lessonRepository.save(lesson);
 		return "Modified";
 	}
 	

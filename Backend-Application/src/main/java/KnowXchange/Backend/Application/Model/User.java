@@ -167,5 +167,15 @@ public List<Takes> getReserves() {
 public void setReserves(List<Takes> reserves) {
 	this.reserves = reserves;
 }
+
+
+
+public void spendTokens(Long payedTokens) {
+	  this.tokens = this.tokens - payedTokens;
+}
+
+public void getTokenPayment(Long payedTokens) {
+	  this.tokens = this.tokens +  payedTokens;
+}
   
 }
