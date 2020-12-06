@@ -3,6 +3,7 @@ package KnowXchange.Backend.Application.Controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,12 @@ import KnowXchange.Backend.Application.Model.Theme;
 import KnowXchange.Backend.Application.Repository.CourseRepository;
 import KnowXchange.Backend.Application.Repository.LessonRepository;
 import KnowXchange.Backend.Application.Repository.ThemeRepository;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpStatus;
 
 @Controller
 @CrossOrigin("*")
@@ -257,5 +264,23 @@ ___  ___     _            _             _____            _       _        _____
 		lessonRepository.delete(lesson);
 		return "Deleted";
 	}
+	
+	
+	//********
+	//metodo con body para agregar leccion
+
+		@PostMapping(path = "/addLesson/{courseId}")
+		public ResponseEntity<Integer> addNewLessonKX(
+				@PathVariable (value = "courseId") Integer courseid,
+				@RequestBody Lesson lesson
+				) {
+			
+			lesson.setResources(null);
+		    lesson.setCourse(courseRepository.findById(courseid).get());	    
+		    Lesson l = lessonRepository.save(lesson);
+		    l.setCourse(null);
+			return new ResponseEntity<>(l.getId(),HttpStatus.CREATED);
+		}
+	//********
 	
 }

@@ -194,5 +194,24 @@ public @ResponseBody LearningResource getLearningResourceByIdByRequestParameter(
 		
 	//___________________________________________________________________________________
 		
+		
+		
+		
+		//*************
+		//Metodo con body para agregar recurso
+
+		@PostMapping(path="/addResource/{id}")
+		  public ResponseEntity<Void> addResourceByResponseEntityBody(
+				  @PathVariable(value = "id") Integer id,
+				  @RequestBody LearningResource lr
+				  ) 
+		{
+			lr.setSupportedLesson(lessonRepository.findById(id).get());		
+			learningResourceRepository.save(lr);
+		    return new ResponseEntity<>(HttpStatus.CREATED);
+		}
+		
+		
+		//*************
 
 }

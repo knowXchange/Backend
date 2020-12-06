@@ -174,19 +174,23 @@ public class QuestionController {
 	//___________________________________________________________________________________
 	
 	
-	@PostMapping(path="/addQuestion/{studentId}/{lessonId}")
-	  public ResponseEntity<Question> addQuestion(
-			  @PathVariable(value = "studentId")Integer studentId,
-			  @PathVariable(value = "lessonId")Integer lessonId,
-			  @RequestBody Question question
-	      ) {		
-	    question.SetAsking_user( userRepository.findById(studentId).get()  );
-	    question.setLesson(lessonRepository.findById(lessonId).get());
-	    
-	    Question q = questionRepository.save(question);
-	    
-	    q.setLesson(null);
-	    return new ResponseEntity<>(q, HttpStatus.CREATED);
-	}
+
+	
+	//*
+	//Metodo con bofy para agregar una pregunta
+
+		@PostMapping(path="/addQuestion/{studentId}/{lessonId}")
+		  public ResponseEntity<Question> addQuestion(
+				  @PathVariable(value = "studentId")Integer studentId,
+				  @PathVariable(value = "lessonId")Integer lessonId,
+				  @RequestBody Question question
+		      ) {		
+		    question.SetAsking_user( userRepository.findById(studentId).get()  );
+		    question.setLesson(lessonRepository.findById(lessonId).get());
+		    Question q = questionRepository.save(question);
+		    q.setLesson(null);
+		    return new ResponseEntity<>(q, HttpStatus.CREATED);
+		}
+	//*
 	
 }

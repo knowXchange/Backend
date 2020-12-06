@@ -98,4 +98,14 @@ public class Lesson {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
+	
+	
+	public List<LearningResource> getResources(){
+		return this.learningResources;
+	}
+	
+	public void setResources(List<LearningResource> LearningResource) {
+		this.learningResources = LearningResource;
+	}
+	
 }

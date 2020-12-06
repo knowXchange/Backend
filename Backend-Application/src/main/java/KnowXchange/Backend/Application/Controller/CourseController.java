@@ -3,6 +3,8 @@ package KnowXchange.Backend.Application.Controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -577,6 +579,28 @@ public class CourseController {
 		}
 		
 		//==================================================================================
+		
+		//******
+		
+		//Metodo con body para agregar un curso 
+
+		@PostMapping (path = "/addCourse/{ownerId}/{branch_id}")
+		public ResponseEntity<Integer> addCourse(
+				@PathVariable (value="ownerId") Integer ownerId, 
+				@PathVariable ( value="branch_id") Integer branch_id,
+				@RequestBody Course course
+			){
+			course.setUserOwner(userRepository.findById(ownerId).get());
+			course.setNumber_of_reviews(0);
+		    course.setScore_accumulator(0.0);
+		    course.setAverageScore(0.0);
+		    course.setBranch(fieldBranchRepository.findById(branch_id).get());
+			Course c = courseRepository.save(course);		
+			return new ResponseEntity<Integer>(c.getId(), HttpStatus.CREATED);
+		}
+
+
+		//*******
 		
 		
 }
