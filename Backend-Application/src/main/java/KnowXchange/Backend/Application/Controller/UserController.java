@@ -106,6 +106,8 @@ public class UserController {
   
   
   
+  //NOTA: Desde Frontend tokens llega como nulo. A la hora de crear el objeo en back
+  //se asignan los 1000 Tokens de regalo.
   
   @PostMapping(path = "/addUser")
   public ResponseEntity<Void> addUser(@RequestBody User user) {
@@ -115,6 +117,7 @@ public class UserController {
 		}
 	  }
 	  user.setPassword(passwordEncoder.encode(user.getPassword()));
+	  user.setTokens(1000l);
 	  userRepository.save( user );
 	  return new ResponseEntity<>( HttpStatus.CREATED );
   }
@@ -131,7 +134,7 @@ public class UserController {
     n.setName(name);
     n.setEmail(email);
     n.setPassword(passwordEncoder.encode(password));
-    n.setTokens(tokens);
+    n.setTokens(1000l);
     n.setDescription(description);
     userRepository.save(n);
     return "Saved";
