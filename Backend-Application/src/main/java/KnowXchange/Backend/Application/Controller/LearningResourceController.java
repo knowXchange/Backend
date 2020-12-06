@@ -51,16 +51,7 @@ public class LearningResourceController {
 	   
 	 */
 	
-	@PostMapping(path="/addResource/{id}")
-	  public ResponseEntity<Void> addAnswerByPathVariable(
-			  @PathVariable(value = "id") Integer id,
-			  @RequestBody LearningResource lr
-			  ) 
-	{
-		lr.setSupportedLesson(lessonRepository.findById(id).get());		
-		learningResourceRepository.save(lr);
-	    return new ResponseEntity<>(HttpStatus.CREATED);
-	}
+
 	
 	@PostMapping(path="/addLearningResourceByPathVariable/{type}/{name}/{link}/{supported_lesson_Id}")
 	  public @ResponseBody LearningResource addAnswerByPathVariable(
@@ -213,5 +204,6 @@ public @ResponseBody LearningResource getLearningResourceByIdByRequestParameter(
 		
 		
 		//*************
+		
 
 }
