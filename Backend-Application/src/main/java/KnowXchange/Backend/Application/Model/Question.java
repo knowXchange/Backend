@@ -27,8 +27,6 @@ public class Question {
 	@Column(name = "question_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
-    private String Topic;
     
     private String Text;
 	

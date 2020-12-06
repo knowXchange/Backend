@@ -226,9 +226,9 @@ public class UserController {
 		  ownerOfCourse.getTokenPayment(courseObtained.getTokensCost());
 		  userRepository.save(ownerOfCourse);
 		  
-		  ans = "Registered";
+		  ans = "Registro exitoso :D";
 	  }else {
-		  ans = "The Student is Already Registered";
+		  ans = "Error. Actualmente ya te encuentras inscrito en este curso.";
 	  }
 	  return ans;
 	  }
