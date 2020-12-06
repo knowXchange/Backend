@@ -1,12 +1,15 @@
 package KnowXchange.Backend.Application.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +21,9 @@ import KnowXchange.Backend.Application.Repository.LessonRepository;
 import KnowXchange.Backend.Application.Repository.QuestionRepository;
 import KnowXchange.Backend.Application.Repository.UserRepository;
 import KnowXchange.Backend.Application.Repository.AnswerRepository;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
@@ -167,5 +173,20 @@ public class QuestionController {
 	}
 	//___________________________________________________________________________________
 	
+	
+	@PostMapping(path="/addQuestion/{studentId}/{lessonId}")
+	  public ResponseEntity<Question> addQuestion(
+			  @PathVariable(value = "studentId")Integer studentId,
+			  @PathVariable(value = "lessonId")Integer lessonId,
+			  @RequestBody Question question
+	      ) {		
+	    question.SetAsking_user( userRepository.findById(studentId).get()  );
+	    question.setLesson(lessonRepository.findById(lessonId).get());
+	    
+	    Question q = questionRepository.save(question);
+	    
+	    q.setLesson(null);
+	    return new ResponseEntity<>(q, HttpStatus.CREATED);
+	}
 	
 }
