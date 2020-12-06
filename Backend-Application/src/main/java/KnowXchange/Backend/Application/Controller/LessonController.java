@@ -52,6 +52,7 @@ public class LessonController {
 			c.setListTakes(null);
 			c.setListTackles(null);
 			if(c.getId().equals(id)) {
+				l.setResources(null);
 				lessons.add(l);
 			}
 		}
