@@ -61,9 +61,7 @@ public class Question {
 	}
 	
 	
-	public String getTopic() {
-		return this.Topic;
-	}
+
 	
 	public String getText() {
 		return this.Text;
@@ -71,9 +69,7 @@ public class Question {
 	
 	
 	
-	public void setTopic(String topic) {
-		this.Topic = topic;
-	}
+
 	
 	
 	public void setText(String text) {

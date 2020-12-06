@@ -69,7 +69,7 @@ public class QuestionController {
 		   
 			
 		    Question question = new Question();
-		    question.setTopic(topic);
+		    
 		    question.setText(text); 
 		    question.SetAsking_user( userRepository.findById(studentId).get()  );
 		    question.setLesson(lessonRepository.findById(lessonId).get());
@@ -90,7 +90,7 @@ public class QuestionController {
 		   
 			
 		    Question question = new Question();
-		    question.setTopic(topic);
+		    
 		    question.setText(text); 
 		    question.SetAsking_user( userRepository.findById(studentId).get()  );
 		    question.setLesson(lessonRepository.findById(lessonId).get());
