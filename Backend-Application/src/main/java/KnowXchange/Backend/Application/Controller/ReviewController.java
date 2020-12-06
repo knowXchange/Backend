@@ -194,7 +194,7 @@ public class ReviewController {
 					  ArrayList<Review> reviews = new ArrayList<>();
 					
 						for(Review c : reviewRepository.findAll()) {
-							if(c.getReviewed_Course().getId() == id) {
+							if(c.getReviewed_Course().getId().equals(id)) {
 								c.setReviewed_Course(null);
 								reviews.add(c);				
 							}
@@ -208,7 +208,7 @@ public class ReviewController {
 					ArrayList<Review> reviews = new ArrayList<>();
 					
 					for(Review c : reviewRepository.findAll()) {
-						if(c.getReviewed_Course().getId() == id) {
+						if(c.getReviewed_Course().getId().equals(id)) {
 							c.setReviewed_Course(null);
 							reviews.add(c);				
 						}
