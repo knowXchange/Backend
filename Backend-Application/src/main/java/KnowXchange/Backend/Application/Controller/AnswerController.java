@@ -168,7 +168,7 @@ public class AnswerController {
 		  ArrayList<Answer> answers = new ArrayList<>();
 		
 			for(Answer c : answerRepository.findAll()) {
-				if(c.getSolvedQuestion().getId() == id) {
+				if(c.getSolvedQuestion().getId().equals(id)) {
 					c.setSolvedQuestion(null);
 					answers.add(c);				
 				}
@@ -181,7 +181,7 @@ public class AnswerController {
 		ArrayList<Answer> answers = new ArrayList<>();
 		
 		for(Answer c : answerRepository.findAll()) {
-			if(c.getSolvedQuestion().getId() == id) {
+			if(c.getSolvedQuestion().getId().equals(id)) {
 				c.setSolvedQuestion(null);
 				answers.add(c);				
 			}
