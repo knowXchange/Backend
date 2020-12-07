@@ -322,14 +322,7 @@ public class CourseController {
 		  return courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
 	}
 	
-	@PutMapping(path = "/modifyCourse/{id}")
-	  public @ResponseBody String modifyCourse(@PathVariable(value = "id")Integer id,@RequestBody Course course) {
-		  Course courseReceived = courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
-		  courseReceived.setTitle(course.getTitle());
-		  courseReceived.setDescription(course.getDescription());
-		  courseReceived.setTokensCost(course.getTokensCost());
-		  return "Modified";
-	}
+
 	
 	@DeleteMapping(path = "/deleteCourse/{id}")
 	public @ResponseBody String deleteCourse(@PathVariable(value = "id")Integer id) {
@@ -601,6 +594,18 @@ public class CourseController {
 
 
 		//*******
+		
+		//+
+		@PutMapping(path = "/modifyCourse/{id}")
+		  public ResponseEntity<Void> modifyCourse(@PathVariable(value = "id")Integer id,@RequestBody Course course) {
+			  Course courseReceived = courseRepository.findById(id).orElseThrow(() -> new RuntimeException());
+			  courseReceived.setTitle(course.getTitle());
+			  courseReceived.setDescription(course.getDescription());
+			  courseReceived.setTokensCost(course.getTokensCost());
+			  courseRepository.save(courseReceived);
+			  return new ResponseEntity<>(HttpStatus.OK);
+		}
+		//+
 		
 		
 }

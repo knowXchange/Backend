@@ -283,5 +283,17 @@ ___  ___     _            _             _____            _       _        _____
 			return new ResponseEntity<>(l.getId(),HttpStatus.CREATED);
 		}
 	//********
+		
+		
+		//+
+		@PutMapping(path="/modifyLesson")
+		public ResponseEntity<Void> setLessonById(@RequestBody Lesson l) {
+			Lesson lesson = lessonRepository.findById(l.getId()).orElseThrow(() -> new RuntimeException());
+			lesson.setTitle(l.getTitle());
+			lesson.setDescription(l.getDescription());
+			lessonRepository.save(lesson);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		//+
 	
 }
