@@ -161,7 +161,7 @@ public @ResponseBody LearningResource getLearningResourceByIdByRequestParameter(
 			  ArrayList<LearningResource> learning_resources = new ArrayList<>();
 			
 				for(LearningResource c : learningResourceRepository.findAll()) {
-					if(c.getSupportedLesson().getId() == id) {
+					if(c.getSupportedLesson().getId().equals(id)) {
 						c.setSupportedLesson(null);
 						learning_resources.add(c);
 					}
@@ -174,7 +174,7 @@ public @ResponseBody LearningResource getLearningResourceByIdByRequestParameter(
 			  ArrayList<LearningResource> learning_resources = new ArrayList<>();
 				
 				for(LearningResource c : learningResourceRepository.findAll()) {
-					if(c.getSupportedLesson().getId() == id) {
+					if(c.getSupportedLesson().getId().equals(id)) {
 						c.setSupportedLesson(null);
 						learning_resources.add(c);
 					}
